@@ -1,6 +1,43 @@
 const { gql } = require("apollo-server");
+const { GraphQLScalarType } = require("graphql");
+
+const dateScalar = new GraphQLScalarType({
+	name: "Date",
+	description: "Date custom scalar type",
+	ser
+})
 
 module.exports = gql`
+	type Spot {
+		spot_num:Int!
+		partOf: Property!
+	}
+	type Property {
+		product_id: ID!
+		product_name: String!
+		address: String!
+		spots: [Spot!]!
+		schedule: [Schedule]
+		cost_per_hour: Float!
+		description: String
+		price_id: ID!
+		owner: User!
+	}
+	type Booking {
+		booking_id: ID!
+		spot: Spot!
+		booking_start: DateTime!
+		booking_end: DateTime!
+		price: Float!
+		booking_user: User!
+	}
+	type Schedule {
+		property: Property!
+		time_start: Int!
+		time_end: Int!
+		repeating: Boolean!
+		weekly_schedule: [Boolean!]
+	}
 	type Account {
 		user_id: ID!
 		username: String!
