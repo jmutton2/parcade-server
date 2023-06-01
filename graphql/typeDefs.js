@@ -21,11 +21,13 @@ module.exports = gql`
 		confirmPassword: String!
 		email: String
 	}
+
 	type Query {
 		getUsers: [Account]
 	}
 	type Mutation {
 		register(registerInput: RegisterInput): User!
 		login(username: String!, password: String!): User!
+		tokenIsValid(token: String!): String
 	}
 `;

@@ -114,6 +114,10 @@ module.exports = {
 				token,
 			};
 		},
+		async tokenIsValid(_parent, { token }, _context, _info) {
+			let res = jwt.verify(token, secret_key);
+			return res.exp < new Date() / 1000;
+		},
 	},
 	Query: {
 		async getUsers() {
