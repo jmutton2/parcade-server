@@ -2,10 +2,10 @@ const { gql } = require("apollo-server");
 const { GraphQLScalarType } = require("graphql");
 
 const dateScalar = new GraphQLScalarType({
-	name: "Date",
-	description: "Date custom scalar type",
-	ser
-})
+  name: "Date",
+  description: "Date custom scalar type",
+  ser,
+});
 
 module.exports = gql`
 	type Spot {
@@ -52,6 +52,14 @@ module.exports = gql`
 		username: String!
 		created_on: String!
 	}
+	input PropertyCreationInput {
+		property_name: String!
+		address: String!
+		cost_per_hour: Float!
+		num_of_spots: Int!
+		description: String
+		owner_email: String!
+	}
 	input RegisterInput {
 		username: String!
 		password: String!
@@ -60,8 +68,17 @@ module.exports = gql`
 	}
 	type Query {
 		getUsers: [Account]
+		getProperties: [Property]
+		getPropertyByID(propertyID: String!): Property!
+		getPropertyByOwner(owner_email: String): [Property]
+		getBookingsByProperty()
+		getBookingsByRenterID()
 	}
 	type Mutation {
 		register(registerInput: RegisterInput): User!
+		addProperty(propertyInput: Property)
+		removeProperty(propertyID: String!)
+		changePropertyData(propertyID: String!)
+		createBooking()
 	}
 `;
